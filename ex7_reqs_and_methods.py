@@ -3,7 +3,6 @@ import requests
 link = 'https://playground.learnqa.ru/ajax/api/compare_query_type'
 list_with_methods = ['POST', 'PUT', 'DELETE', 'GET']
 methods_out_of_list = ['HEAD', 'PATCH', 'OPTIONS']
-list_with_methods_for_wrong_case = ['PUT', 'DELETE', 'GET', 'POST']
 
 def requests_whithout_any_params(url, list_methods):
     print('Запускаем цикл по сценарию когда тип метода не передается')
