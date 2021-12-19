@@ -11,7 +11,7 @@ def requests_whithout_any_params(url, list_methods):
         print(f'{method_value} - {response.text}')
 
 def requests_out_of_lists(url, list_methods):
-    print('Запускаем цикл по сценарию когда тип не из списака')
+    print('Запускаем цикл по сценарию когда тип не из списка')
     for method_value in list_methods:
         method_data = {
             'method': method_value
