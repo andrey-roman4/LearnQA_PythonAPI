@@ -118,3 +118,4 @@ class TestUserDelete(BaseCase):
         )
         Assertions.assert_code_status(response_get_second_user, 200)
         Assertions.assert_json_has_keys(response_get_second_user, data_list)
+
