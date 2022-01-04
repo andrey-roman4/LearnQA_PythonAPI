@@ -1,8 +1,12 @@
 from config.base_case import BaseCase
 from config.assertions import Assertions
 from config.my_requests import MyRequests
+import allure
 
+@allure.epic('Editing user cases')
 class TestUserEdit(BaseCase):
+    @allure.title('Successfully edit test user')
+    @allure.description('This test checking successfully editing user')
     def test_edit_just_created_user(self):
         # REGISTER
         register_data = self.prepare_registration_data()
@@ -52,12 +56,16 @@ class TestUserEdit(BaseCase):
             'Wrong name of the user after edit'
         )
 
+    @allure.title('Edit user by unauthorize user')
+    @allure.description('This test checking editing user by unauthorize user')
     def test_edit_unauthorized_user(self):
         new_name = 'Change-Name'
         response = MyRequests.put('user/21772', data={'firstName': new_name})
         Assertions.assert_code_status(response, 400)
         assert response.content.decode('utf-8') == f"Auth token not supplied", f'Successful change user name via unauthorized user'
 
+    @allure.title('Edit another user by authorize user')
+    @allure.description('This test checking editing another user by authorize user')
     def test_edit_by_authorized_user_of_another_user(self):
         login_data_for_1 = {
             'email': 'learnqa01022022144823@example.com', # user_id = 21773
@@ -116,6 +124,8 @@ class TestUserEdit(BaseCase):
         Assertions.assert_json_value_by_name(response_after_edit_user, 'firstName', firstname_before, f"User {user_id_from_auth_for2} has changed value of 'First Name'")
         Assertions.assert_json_value_by_name(response_after_edit_user, 'lastName', lastname_before, f"User {user_id_from_auth_for2} has changed value of 'Last Name'")
 
+    @allure.title("Edit user's email w/o '@'")
+    @allure.description("This test checking editing user's email w/o '@' by authorize user")
     def test_edit_email_without_dog_symbol(self):
         data_for_login = {
             'password': '123',
@@ -139,6 +149,8 @@ class TestUserEdit(BaseCase):
         Assertions.assert_code_status(response_after_edit_wrong_email, 400)
         assert response_after_edit_wrong_email.content.decode('utf-8') == f"Invalid email format", f'Successful change user email with broken email without symbol "@"'
 
+    @allure.title("Edit user's first name to short one")
+    @allure.description("This test checking editing user's first name to short one by authorize user")
     def test_edit_firstname_to_short_one(self):
         data_for_login = {
             'password': '123',

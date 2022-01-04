@@ -1,16 +1,22 @@
 from config.my_requests import MyRequests
 from config.base_case import BaseCase
 from config.assertions import Assertions
+import allure
 
+@allure.epic('Get user details')
 class TestUserGet(BaseCase):
-    def test_get_user_datails_not_auth(self):
+    @allure.title("Get user details by unauthorize user")
+    @allure.description("This test checking getting user's details by unauthorize user")
+    def test_get_user_details_not_auth(self):
         response = MyRequests.get('user/2')
         Assertions.assert_json_has_key(response, 'username')
         Assertions.assert_json_has_not_key(response, 'email')
         Assertions.assert_json_has_not_key(response, 'firstName')
         Assertions.assert_json_has_not_key(response, 'lastName')
 
-    def test_user_datails_as_same_user(self):
+    @allure.title("Get user details by authorize user")
+    @allure.description("This test checking getting user's details by authorize user")
+    def test_user_details_as_same_user(self):
         data = {
             'email': 'vinkotov@example.com',
             'password': '1234'
@@ -30,7 +36,9 @@ class TestUserGet(BaseCase):
         expected_fields = ['username', 'email', 'firstName', 'lastName']
         Assertions.assert_json_has_keys(response2, expected_fields)
     
-    def test_user_datails_as_other_user(self):
+    @allure.title("Get another user details by authorize user")
+    @allure.description("This test checking getting another user's details by authorize user")
+    def test_user_details_as_other_user(self):
         data = {
             'email': 'learnqa01022022144823@example.com',
             'password': '123'
